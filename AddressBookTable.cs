@@ -34,10 +34,25 @@ namespace AddressBookService_LINQ_And_DataTable
             var contacts = addresstable.Rows.Cast<DataRow>();
             foreach (var contact in contacts)
             {
-                Console.WriteLine("\n------------------------------------");
+                
                 Console.Write("First Name : " + contact.Field<string>("FirstName") + " " + "Last Name : " + contact.Field<string>("LastName") + " " + "Address : " + contact.Field<string>("Address") + " " + "City : " + contact.Field<string>("City") + " " + "State : " + contact.Field<string>("State")
                     + " " + "Zip : " + contact.Field<int>("Zip") + " " + "Phone Number : " + contact.Field<long>("PhoneNumber") + " " + "Email : " + contact.Field<string>("Email") + " ");
+                Console.WriteLine("\n------------------------------------");
             }
+        }
+
+        public void EditContact(DataTable table)
+        {
+            var contacts = table.AsEnumerable().Where(x => x.Field<string>("FirstName") == "Rama");
+            foreach (var contact in contacts)
+            {
+                contact.SetField("LastName", "Das");
+                contact.SetField("City", "Mumbai");
+                contact.SetField("State", "Maharashtra");
+            }
+           
+            Console.WriteLine("The Contact is updated succesfully\n");
+            DisplayContacts(contacts.CopyToDataTable());
         }
     }
 }
