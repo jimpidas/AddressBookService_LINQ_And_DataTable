@@ -49,10 +49,22 @@ namespace AddressBookService_LINQ_And_DataTable
                 contact.SetField("LastName", "Das");
                 contact.SetField("City", "Mumbai");
                 contact.SetField("State", "Maharashtra");
+               
             }
            
             Console.WriteLine("The Contact is updated succesfully\n");
             DisplayContacts(contacts.CopyToDataTable());
+        }
+
+        public void DeleteContact(DataTable table)
+        {
+            var contacts = table.AsEnumerable().Where(x => x.Field<string>("FirstName") == "Asha");
+            foreach (var row in contacts.ToList())
+            {
+                row.Delete();
+            }
+            Console.WriteLine("The Contact is deleted succesfully. Now the list contains following records \n");
+            DisplayContacts(table);
         }
     }
 }
